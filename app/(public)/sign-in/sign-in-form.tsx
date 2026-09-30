@@ -28,9 +28,10 @@ export function SignInForm({ linkError }: { linkError?: string }) {
     setPending(false);
     if (error) {
       setError(
-        error.status === 429
-          ? "Too many attempts. Wait a minute and try again."
-          : (error.message ?? "Something went wrong. Try again."),
+        error.message ??
+          (error.status === 429
+            ? "Too many attempts. Wait a minute and try again."
+            : "Something went wrong. Try again."),
       );
       return;
     }

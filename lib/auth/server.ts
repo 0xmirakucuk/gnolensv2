@@ -9,6 +9,10 @@ import { magicLinkEmail, sendEmail } from "@/lib/email";
 import { env } from "@/lib/env";
 import { isAdminEmail, isAllowedEmail, normalizeEmail } from "./allowed-email";
 
+/** At most this many unused magic links per address per window. */
+const MAGIC_LINKS_PER_WINDOW = 3;
+const MAGIC_LINK_WINDOW_MS = 10 * 60 * 1000;
+
 export const SIGN_IN_NOT_ALLOWED =
   "Use your @studbocconi.it email address. Aliases with “+” are not accepted.";
 
@@ -47,8 +51,23 @@ function createAuth() {
             code: "EMAIL_NOT_ALLOWED",
           });
         }
+        const email = normalizeEmail(ctx.body.email)!;
+        // Per-address limit on top of the per-IP one: IPs come from a header that a client can
+        // spoof unless the host overwrites it, and this is what protects students' inboxes.
+        const recentLinks = await db.verification.count({
+          where: {
+            value: { contains: JSON.stringify({ email }).slice(1, -1) },
+            createdAt: { gte: new Date(Date.now() - MAGIC_LINK_WINDOW_MS) },
+          },
+        });
+        if (recentLinks >= MAGIC_LINKS_PER_WINDOW) {
+          throw new APIError("TOO_MANY_REQUESTS", {
+            message: "Too many sign-in links requested. Wait a few minutes and try again.",
+            code: "TOO_MANY_LINKS",
+          });
+        }
         // Send the link to, and key the account by, the normalized address.
-        return { context: { body: { ...ctx.body, email: normalizeEmail(ctx.body.email) } } };
+        return { context: { body: { ...ctx.body, email } } };
       }),
     },
     databaseHooks: {
