@@ -4,6 +4,7 @@ import { DraftBadge } from "@/components/draft-badge";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { requireOnboardedUser } from "@/lib/auth/session";
 import { listCourses } from "@/lib/courses/queries";
+import { courseTint } from "@/lib/courses/tint";
 
 export const metadata: Metadata = { title: "Courses" };
 
@@ -17,14 +18,18 @@ export default async function CoursesPage() {
   if (showingFallback) courses = await listCourses(FALLBACK_YEAR);
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-semibold tracking-tight">Courses</h1>
-        <p className="text-muted-foreground text-sm">
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-2">
+        <h1 className="text-heading-3 sm:text-heading-2">Courses</h1>
+        <p className="text-body-md text-slate">
           {showingFallback
             ? `Year ${user.year} courses are not available yet. Here are the year ${FALLBACK_YEAR} courses.`
-            : `BEMACS year ${user.year}`}{" "}
-          <Link href="/onboarding" className="underline underline-offset-4">
+            : `BEMACS year ${user.year}`}
+          {" · "}
+          <Link
+            href="/onboarding"
+            className="text-body-sm text-link-blue active:text-link-blue-pressed font-medium"
+          >
             Change year
           </Link>
         </p>
@@ -34,17 +39,24 @@ export default async function CoursesPage() {
           <li key={course.slug}>
             <Link
               href={`/courses/${course.slug}`}
-              className="focus-visible:ring-ring/50 block h-full rounded-xl outline-none focus-visible:ring-[3px]"
+              className="focus-visible:ring-primary/40 block h-full rounded-lg outline-none focus-visible:ring-[3px]"
             >
-              <Card className="hover:bg-accent/50 h-full transition-colors">
-                <CardHeader>
-                  <CardTitle className="leading-snug">{course.name}</CardTitle>
-                  <CardDescription className="flex flex-wrap items-center gap-2">
-                    {course.code && <span>{course.code}</span>}
+              <Card
+                tint={courseTint(course.order)}
+                className="hover:shadow-card h-full p-8 transition-shadow duration-150"
+              >
+                <CardHeader className="gap-3">
+                  {course.code && (
+                    <span className="text-slate text-[11px] leading-[1.4] font-semibold tracking-[1px] uppercase">
+                      Course {course.code}
+                    </span>
+                  )}
+                  <CardTitle className="text-heading-4 text-ink">{course.name}</CardTitle>
+                  <CardDescription className="text-charcoal flex flex-wrap items-center gap-2">
                     <span>
                       {course.unitCount} units · {course.partCount} parts
                     </span>
-                    {course.draft && <DraftBadge />}
+                    {course.draft && <DraftBadge onTint />}
                   </CardDescription>
                 </CardHeader>
               </Card>
@@ -53,7 +65,7 @@ export default async function CoursesPage() {
         ))}
       </ul>
       {courses.length === 0 && (
-        <p className="text-muted-foreground text-sm">No courses yet. Run `pnpm db:seed`.</p>
+        <p className="text-body-sm text-slate">No courses yet. Run `pnpm db:seed`.</p>
       )}
     </div>
   );

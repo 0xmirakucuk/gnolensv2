@@ -50,3 +50,24 @@ Gate: `pnpm lint && pnpm typecheck && pnpm test` green (49 tests). `pnpm test:e2
 1. **Official units and parts** for 30403, 30400 (Module 1) and 30398. Paste the syllabus sections, or edit `content/syllabus/*.yaml` directly, then set `draft: false`. Slugs become permanent once M1 tags questions to them.
 2. **Hosting + Postgres provider** (must support pgvector), before the first deploy. Resend also needs the domain verified (SPF/DKIM/DMARC) to get into Microsoft 365 inboxes, which `studbocconi.it` uses.
 3. **Privacy note wording.** The sign-in page says we store only email and year, with no tracking. Confirm or replace it before launch (GDPR).
+
+## Design update: DESIGN.md adopted (2026-09-30)
+
+The owner provided `docs/DESIGN.md`, which is now the only UI source of truth (rule added to CLAUDE.md).
+
+- **Tokens:** every color, radius, shadow and type-scale token is in `app/globals.css`. shadcn's semantic names (`primary`, `border`, `ring`, ...) point at them, so generated components match the spec.
+- **Components** restyled to the spec:
+  - Buttons: purple `primary`, 8px rectangles, 40px tall.
+  - Inputs: 44px, 2px purple focus border.
+  - Cards: 12px radius with a hairline border, or a pastel `tint`.
+  - Badges: pill status badges and 6px tag chips.
+- **Screens:**
+  - Sign-in and check-email use the navy hero band with sticky-note dots and a white card with the deep "mockup" shadow.
+  - The app pages use the 64px white top navigation.
+  - Each course keeps one pastel tint on the list and on its page: peach for Micro, sky for Math, mint for CS.
+  - Units carry lavender "Unit n" tag chips.
+- **Gaps and choices:**
+  - **Font:** Notion Sans is proprietary, so we use Inter, the first fallback DESIGN.md lists, from a local package.
+  - **Dark mode:** DESIGN.md defines no dark-mode tokens, so the app is light-only for now; the old OS dark mode was removed.
+  - **tailwind-merge** was taught the custom `text-*` sizes so they aren't dropped when merged with text colors.
+- All tests pass: lint, typecheck, 50 Vitest tests, 9 Playwright tests.

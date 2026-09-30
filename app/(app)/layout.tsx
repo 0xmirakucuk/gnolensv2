@@ -8,7 +8,9 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
   return (
     <>
       <AppHeader email={user.email} isAdmin={user.role === "ADMIN"} />
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">{children}</main>
+      <main className="mx-auto w-full max-w-[1280px] flex-1 px-4 py-10 sm:px-8 sm:py-12">
+        {children}
+      </main>
     </>
   );
 }

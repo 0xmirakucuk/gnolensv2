@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { requireUser } from "@/lib/auth/session";
 import { saveYear } from "./actions";
 
@@ -13,42 +13,42 @@ export default async function OnboardingPage({ searchParams }: PageProps<"/onboa
   const { error } = await searchParams;
 
   return (
-    <Card className="mx-auto max-w-md">
-      <CardHeader>
-        <CardTitle>
-          <h1 className="text-xl">Welcome</h1>
-        </CardTitle>
-        <CardDescription>Which BEMACS year are you in? You can change it later.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form action={saveYear} className="flex flex-col gap-4">
-          <fieldset className="flex flex-col gap-2">
-            <legend className="sr-only">Year</legend>
-            {YEARS.map((year) => (
-              <label
-                key={year}
-                className="has-checked:border-primary has-checked:bg-accent flex cursor-pointer items-center gap-3 rounded-md border px-3 py-2 text-sm"
-              >
-                <input
-                  type="radio"
-                  name="year"
-                  value={year}
-                  defaultChecked={user.year === year}
-                  required
-                  className="accent-primary"
-                />
-                Year {year}
-              </label>
-            ))}
-          </fieldset>
-          {error && (
-            <p role="alert" className="text-destructive text-sm">
-              Choose your year to continue.
-            </p>
-          )}
-          <Button type="submit">Continue</Button>
-        </form>
-      </CardContent>
+    <Card className="mx-auto w-full max-w-md gap-6 p-8">
+      <div className="flex flex-col gap-2">
+        <h1 className="text-heading-4">Welcome</h1>
+        <p className="text-body-md text-slate">
+          Which BEMACS year are you in? You can change it later.
+        </p>
+      </div>
+      <form action={saveYear} className="flex flex-col gap-5">
+        <fieldset className="flex flex-col gap-2">
+          <legend className="sr-only">Year</legend>
+          {YEARS.map((year) => (
+            <label
+              key={year}
+              className="border-hairline-strong text-body-md has-checked:border-primary flex h-11 cursor-pointer items-center gap-3 rounded-md border px-4 transition-[border-color,box-shadow] duration-150 has-checked:shadow-[inset_0_0_0_1px_var(--color-primary)]"
+            >
+              <input
+                type="radio"
+                name="year"
+                value={year}
+                defaultChecked={user.year === year}
+                required
+                className="accent-primary"
+              />
+              Year {year}
+            </label>
+          ))}
+        </fieldset>
+        {error && (
+          <p role="alert" className="text-body-sm text-error">
+            Choose your year to continue.
+          </p>
+        )}
+        <Button type="submit" size="lg">
+          Continue
+        </Button>
+      </form>
     </Card>
   );
 }

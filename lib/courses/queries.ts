@@ -10,6 +10,7 @@ export async function listCourses(year: number) {
       slug: true,
       name: true,
       code: true,
+      order: true,
       draft: true,
       units: { select: { _count: { select: { parts: true } } } },
     },
@@ -30,6 +31,7 @@ export function getCourseOutline(slug: string) {
       name: true,
       code: true,
       year: true,
+      order: true,
       draft: true,
       units: {
         orderBy: { order: "asc" },

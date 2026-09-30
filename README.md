@@ -4,11 +4,12 @@ Exam preparation for Bocconi BEMACS students: questions mapped to the syllabus, 
 
 - Product spec: [`docs/SPEC.md`](docs/SPEC.md)
 - How we work (for humans and agents): [`CLAUDE.md`](CLAUDE.md)
+- UI design system: [`docs/DESIGN.md`](docs/DESIGN.md) (tokens in `app/globals.css`)
 - Milestone plans: [`docs/plans/`](docs/plans/). Progress log: [`docs/PROGRESS.md`](docs/PROGRESS.md)
 
 ## Stack
 
-Next.js 16 (App Router) · TypeScript · Tailwind 4 + shadcn/ui · PostgreSQL 17 + pgvector · Prisma 7 · Better Auth (email magic link, `@studbocconi.it` only) · Vitest · Playwright · pnpm
+Next.js 16 (App Router) · TypeScript · Tailwind 4 + shadcn/ui, styled by [`docs/DESIGN.md`](docs/DESIGN.md) · PostgreSQL 17 + pgvector · Prisma 7 · Better Auth (email magic link, `@studbocconi.it` only) · Vitest · Playwright · pnpm
 
 ## Local setup
 

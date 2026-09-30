@@ -4,20 +4,21 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
+// docs/DESIGN.md badges: solid status badges are full pills; tag chips are 6px-rounded tints.
 const badgeVariants = cva(
-  "inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-[color,box-shadow] overflow-hidden",
+  "inline-flex w-fit shrink-0 items-center justify-center gap-1 whitespace-nowrap text-caption font-semibold [&>svg]:pointer-events-none [&>svg]:size-3",
   {
     variants: {
       variant: {
-        default: "border-transparent bg-primary text-primary-foreground",
-        secondary: "border-transparent bg-secondary text-secondary-foreground",
-        destructive: "border-transparent bg-destructive text-white",
-        outline: "text-foreground",
+        purple: "rounded-full bg-primary px-2.5 py-1 text-on-primary",
+        pink: "rounded-full bg-brand-pink px-2.5 py-1 text-on-primary",
+        orange: "rounded-full bg-brand-orange px-2.5 py-1 text-on-primary",
+        "tag-purple": "rounded-sm bg-tint-lavender px-2 py-0.5 text-brand-purple-800",
+        "tag-orange": "rounded-sm bg-tint-peach px-2 py-0.5 text-brand-orange-deep",
+        "tag-green": "rounded-sm bg-tint-mint px-2 py-0.5 text-brand-green",
       },
     },
-    defaultVariants: {
-      variant: "default",
-    },
+    defaultVariants: { variant: "tag-purple" },
   },
 );
 

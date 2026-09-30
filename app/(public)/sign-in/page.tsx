@@ -18,17 +18,21 @@ export default async function SignInPage({ searchParams }: PageProps<"/sign-in">
     typeof error === "string" ? (LINK_ERRORS[error] ?? GENERIC_LINK_ERROR) : undefined;
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-2xl font-semibold tracking-tight">BEMACS Exam Prep</h1>
-        <p className="text-muted-foreground text-sm">
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-3 text-center">
+        <h1 className="sm:text-display-lg text-[36px] leading-[1.1] font-semibold tracking-[-1px]">
+          Study what the exam asks.
+        </h1>
+        <p className="text-subtitle text-on-dark-muted">
           Sign in with your Bocconi student email. We&apos;ll send you a link, no password needed.
         </p>
       </div>
-      <SignInForm linkError={linkError} />
-      <p className="text-muted-foreground text-xs">
-        We only store your email address and study year to run the app. No tracking or ads.
-      </p>
+      <div className="border-hairline bg-canvas text-ink shadow-mockup rounded-lg border p-6 sm:p-8">
+        <SignInForm linkError={linkError} />
+        <p className="text-caption text-steel mt-6">
+          We only store your email address and study year to run the app. No tracking or ads.
+        </p>
+      </div>
     </div>
   );
 }

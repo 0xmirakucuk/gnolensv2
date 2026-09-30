@@ -4,29 +4,38 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
+// Variants map 1:1 to docs/DESIGN.md components (button-primary, button-dark, ...).
+// Buttons are 8px rectangles, never pills.
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md text-button-md transition-colors duration-150 outline-none focus-visible:ring-[3px] focus-visible:ring-primary/40 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        outline:
-          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
-        secondary: "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline",
+        primary:
+          "bg-primary text-on-primary active:bg-primary-pressed disabled:bg-hairline disabled:text-muted",
+        dark: "bg-ink-deep text-on-dark active:bg-ink disabled:bg-hairline disabled:text-muted",
+        secondary:
+          "border border-hairline-strong bg-transparent text-ink active:bg-surface disabled:text-muted",
+        onDark: "bg-on-dark text-ink active:bg-surface disabled:opacity-60",
+        secondaryOnDark:
+          "border border-on-dark-muted bg-transparent text-on-dark active:bg-white/10 disabled:opacity-60",
+        ghost: "rounded-sm bg-transparent text-ink active:bg-surface disabled:text-muted",
+        link: "h-auto p-0 text-body-sm font-medium text-link-blue active:text-link-blue-pressed",
+        destructive: "bg-error text-on-primary disabled:bg-hairline disabled:text-muted",
       },
       size: {
-        default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
-        icon: "size-9",
+        default: "h-10 px-[18px] py-[10px]",
+        sm: "h-8 px-3 py-2",
+        lg: "h-11 px-5",
+        icon: "size-10",
       },
     },
+    compoundVariants: [
+      { variant: "ghost", size: "default", className: "h-9 px-3 py-2" },
+      { variant: "link", className: "h-auto px-0 py-0" },
+    ],
     defaultVariants: {
-      variant: "default",
+      variant: "primary",
       size: "default",
     },
   },

@@ -39,7 +39,7 @@ export function SignInForm({ linkError }: { linkError?: string }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
+    <form onSubmit={onSubmit} className="flex flex-col gap-5" noValidate>
       <div className="flex flex-col gap-2">
         <Label htmlFor="email">Email</Label>
         <Input
@@ -53,12 +53,12 @@ export function SignInForm({ linkError }: { linkError?: string }) {
           aria-describedby={error ? "email-error" : undefined}
         />
         {error && (
-          <p id="email-error" role="alert" className="text-destructive text-sm">
+          <p id="email-error" role="alert" className="text-body-sm text-error">
             {error}
           </p>
         )}
       </div>
-      <Button type="submit" disabled={pending}>
+      <Button type="submit" size="lg" disabled={pending}>
         {pending ? "Sending link…" : "Email me a sign-in link"}
       </Button>
     </form>
