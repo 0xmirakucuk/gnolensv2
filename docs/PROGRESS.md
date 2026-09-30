@@ -1,0 +1,52 @@
+# Progress
+
+## M0: Scaffold (done 2026-09-30)
+
+**Acceptance: a user can sign in, see the three courses and their units/parts.** Met. Covered end to end by `e2e/auth.spec.ts` and `e2e/courses.spec.ts`, which sign in through a real emailed magic link and compare the course pages against `content/syllabus/*.yaml`.
+
+Gate: `pnpm lint && pnpm typecheck && pnpm test` green (49 tests). `pnpm test:e2e` green (9 tests). CI workflow added: `.github/workflows/ci.yml`.
+
+### Built
+
+- Next.js 16 (App Router) + TypeScript strict, Tailwind 4, shadcn/ui base components, Prettier, ESLint.
+- Postgres 17 + pgvector image and Mailpit via `docker-compose.yml`. Prisma 7.10 with the pg driver adapter. Migrations `init` and `auth_rate_limit`.
+- Syllabus: `Course > Unit > Part` seeded from `content/syllabus/{micro,math,cs}.yaml`.
+  - YAML is strictly validated; errors name the file and field.
+  - Seeding is an idempotent upsert by slug, runs in one transaction and never deletes; entries removed from the YAML are reported as orphans.
+  - `pnpm db:seed`.
+- Auth: Better Auth magic link.
+  - Only exact `@studbocconi.it` addresses may sign in, checked before any email is sent and again when a user is created. No `+` aliases.
+  - Admins come from the `ADMIN_EMAILS` allowlist.
+  - Links last 15 minutes, work once, and are stored hashed.
+  - Rate limits: per IP (stored in the DB) and 3 links per address per 10 minutes.
+  - Sessions last 30 days, rolling.
+- Email: Resend when `RESEND_API_KEY` is set, otherwise SMTP to Mailpit.
+- Pages:
+  - `/sign-in`, `/sign-in/check-email`
+  - `/onboarding` (BEMACS year, asked at first sign-in)
+  - `/courses`, `/courses/[slug]` (Unit > Part outline)
+  - 404 page
+  - Header with email, admin badge and sign out.
+- Tests:
+  - Unit: email rules, syllabus loader.
+  - DB integration: seed idempotency, reorder, orphans, rollback.
+  - Playwright: 9 flows.
+
+### Skipped / deferred
+
+- **Real course outlines.** The three YAML files are **drafts** I wrote (`draft: true`, shown in the UI as "Draft outline") with the correct names and codes. The units and parts must be replaced from the official 2026/27 course syllabi before M1 tags questions to them.
+- Changing your email or deleting your account: not in the spec for M0.
+- Deployment: no hosting chosen yet, so nothing is deployed.
+
+### Known issues
+
+- `pnpm build` needs `DATABASE_URL` set, because the Prisma client is created when the module loads. That's normal for Prisma apps; CI and any host set it.
+- The per-IP rate limit trusts `x-forwarded-for`. That's safe on hosts that overwrite the header (e.g. Vercel). The per-address cap protects inboxes either way.
+- Removing an address from `ADMIN_EMAILS` demotes it at that person's next sign-in. An existing admin session keeps its old role until then, but `getCurrentUser()` reads the role from the DB, so demoting someone directly in the DB takes effect immediately.
+- The CI workflow was checked by running the same commands locally (Docker Postgres + Mailpit). It had not yet run on GitHub when this entry was written.
+
+### Needs a human decision
+
+1. **Official units and parts** for 30403, 30400 (Module 1) and 30398. Paste the syllabus sections, or edit `content/syllabus/*.yaml` directly, then set `draft: false`. Slugs become permanent once M1 tags questions to them.
+2. **Hosting + Postgres provider** (must support pgvector), before the first deploy. Resend also needs the domain verified (SPF/DKIM/DMARC) to get into Microsoft 365 inboxes, which `studbocconi.it` uses.
+3. **Privacy note wording.** The sign-in page says we store only email and year, with no tracking. Confirm or replace it before launch (GDPR).
