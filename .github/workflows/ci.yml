@@ -1,9 +1,9 @@
 name: CI
 
+# Every push (any branch) gets checked; PRs from branches in this repo show those results.
 on:
   push:
-    branches: [main]
-  pull_request:
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.ref }}
