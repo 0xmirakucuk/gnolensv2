@@ -27,3 +27,7 @@ Project: exam-prep web app for Bocconi BEMACS students. Full product spec: `docs
 - AI answers must cite the source chunk (document + page) they used. If retrieval finds nothing relevant, the AI says so instead of answering from general knowledge.
 - Do not scrape or ingest copyrighted material. Ingestion only reads files placed in `content/` by a human.
 - Keep UI text in English.
+
+## Framework docs
+
+@AGENTS.md
