@@ -14,9 +14,7 @@ const emailList = z
 
 const schema = z.object({
   DATABASE_URL: z.url(),
-  BETTER_AUTH_SECRET: z
-    .string()
-    .min(32, "generate one with: openssl rand -base64 32"),
+  BETTER_AUTH_SECRET: z.string().min(32, "generate one with: openssl rand -base64 32"),
   BETTER_AUTH_URL: z.url(),
   ADMIN_EMAILS: emailList,
   EMAIL_FROM: z.string().min(1),
@@ -37,12 +35,8 @@ export function env(): Env {
   if (cached) return cached;
   const parsed = schema.safeParse(process.env);
   if (!parsed.success) {
-    const issues = parsed.error.issues.map(
-      (i) => `  ${i.path.join(".")}: ${i.message}`,
-    );
-    throw new Error(
-      `Invalid environment variables (see .env.example):\n${issues.join("\n")}`,
-    );
+    const issues = parsed.error.issues.map((i) => `  ${i.path.join(".")}: ${i.message}`);
+    throw new Error(`Invalid environment variables (see .env.example):\n${issues.join("\n")}`);
   }
   cached = parsed.data;
   return cached;

@@ -1,0 +1,51 @@
+# 30398 Fundamentals of Computer Science, BEMACS year 1, a.y. 2026/2027 (class 25).
+# DRAFT outline: replace units/parts with the official course syllabus, then set draft: false.
+# Slugs are permanent IDs (questions will reference them). Edit titles freely; don't rename slugs
+# once questions exist. Order in this file = order in the app.
+slug: cs
+name: Fundamentals of Computer Science
+code: "30398"
+year: 1
+order: 3
+draft: true
+units:
+  - slug: u1
+    title: Programming basics
+    parts:
+      - slug: p1
+        title: Values, types and expressions
+      - slug: p2
+        title: Variables and assignment
+  - slug: u2
+    title: Control flow
+    parts:
+      - slug: p1
+        title: Conditionals
+      - slug: p2
+        title: Loops
+  - slug: u3
+    title: Functions and recursion
+    parts:
+      - slug: p1
+        title: Defining and calling functions
+      - slug: p2
+        title: Recursion
+  - slug: u4
+    title: Data structures
+    parts:
+      - slug: p1
+        title: Strings and lists
+      - slug: p2
+        title: Tuples, dictionaries and sets
+  - slug: u5
+    title: Algorithms and complexity
+    parts:
+      - slug: p1
+        title: Searching and sorting
+      - slug: p2
+        title: Asymptotic complexity
+  - slug: u6
+    title: Object-oriented programming
+    parts:
+      - slug: p1
+        title: Classes and objects

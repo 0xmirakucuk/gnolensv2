@@ -8,16 +8,12 @@ export const metadata: Metadata = {
     default: "BEMACS Exam Prep",
     template: "%s · BEMACS Exam Prep",
   },
-  description:
-    "Exam preparation for Bocconi BEMACS students, mapped to the syllabus.",
+  description: "Exam preparation for Bocconi BEMACS students, mapped to the syllabus.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">{children}</body>
     </html>
   );

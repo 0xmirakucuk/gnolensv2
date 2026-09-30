@@ -1,0 +1,58 @@
+# 30403 Microeconomics, BEMACS year 1, a.y. 2026/2027 (class 25).
+# DRAFT outline: replace units/parts with the official course syllabus, then set draft: false.
+# Slugs are permanent IDs (questions will reference them). Edit titles freely; don't rename slugs
+# once questions exist. Order in this file = order in the app.
+slug: micro
+name: Microeconomics
+code: "30403"
+year: 1
+order: 1
+draft: true
+units:
+  - slug: u1
+    title: Preferences and utility
+    parts:
+      - slug: p1
+        title: Preference relations and their properties
+      - slug: p2
+        title: Utility functions
+      - slug: p3
+        title: Indifference curves and the marginal rate of substitution
+  - slug: u2
+    title: Consumer choice and demand
+    parts:
+      - slug: p1
+        title: Budget constraint
+      - slug: p2
+        title: Utility maximization
+      - slug: p3
+        title: Demand functions and elasticities
+      - slug: p4
+        title: Income and substitution effects
+  - slug: u3
+    title: Production and costs
+    parts:
+      - slug: p1
+        title: Production functions and returns to scale
+      - slug: p2
+        title: Cost minimization
+      - slug: p3
+        title: Short-run and long-run cost curves
+  - slug: u4
+    title: Perfect competition
+    parts:
+      - slug: p1
+        title: Profit maximization and firm supply
+      - slug: p2
+        title: Market equilibrium
+      - slug: p3
+        title: Consumer and producer surplus
+  - slug: u5
+    title: Market power
+    parts:
+      - slug: p1
+        title: Monopoly
+      - slug: p2
+        title: Price discrimination
+      - slug: p3
+        title: Oligopoly and basic game theory

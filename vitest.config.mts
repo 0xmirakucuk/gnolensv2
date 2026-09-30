@@ -8,5 +8,8 @@ export default defineConfig({
   test: {
     include: ["tests/**/*.test.ts"],
     environment: "node",
+    globalSetup: ["tests/setup/global.ts"],
+    // Integration tests share one database.
+    fileParallelism: false,
   },
 });
