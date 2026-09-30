@@ -89,6 +89,17 @@ model Verification {
   @@map("verification")
 }
 
+// Better Auth rate-limit counters. Kept in the DB (not memory) so limits hold across
+// serverless instances.
+model RateLimit {
+  id          String @id
+  key         String @unique
+  count       Int
+  lastRequest BigInt
+
+  @@map("rate_limit")
+}
+
 // ---------------------------------------------------------------------------
 // Syllabus taxonomy: Course > Unit > Part, seeded from content/syllabus/*.yaml.
 // Slugs are the stable identity ("micro", "micro.u1", "micro.u1.p1"); ids are internal.
