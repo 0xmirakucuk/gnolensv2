@@ -49,3 +49,7 @@ next-env.d.ts
 
 # prisma generated client
 /lib/generated/
+
+# course materials: copyrighted, local only (see content/materials/README.md)
+/content/materials/*
+!/content/materials/README.md

@@ -111,9 +111,10 @@ model Course {
   slug  String  @unique
   name  String
   code  String? // Bocconi course code, e.g. "30403"
-  year  Int
-  order Int
-  draft Boolean @default(false) // true while the outline is not yet checked against the official syllabus
+  year     Int
+  semester Int? // 1 or 2 within the year; null if unknown
+  order    Int
+  draft    Boolean @default(false) // true while the outline is not yet checked against the official syllabus
   units Unit[]
 
   @@map("course")

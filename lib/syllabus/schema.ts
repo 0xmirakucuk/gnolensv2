@@ -26,9 +26,9 @@ export const courseFileSchema = z
     order: z.number().int().min(1),
     // true while the outline has not been checked against the official course syllabus.
     draft: z.boolean().default(false),
+    semester: z.union([z.literal(1), z.literal(2)]).optional(),
     // Course-guide facts kept with the syllabus. Not stored in the DB yet; M2's exam simulation
     // (length, weights) is the first planned consumer.
-    semester: z.union([z.literal(1), z.literal(2)]).optional(),
     credits: z.number().int().positive().optional(),
     source_year: z
       .string()
@@ -72,6 +72,7 @@ export type SyllabusCourse = {
   name: string;
   code: string | null;
   year: number;
+  semester: number | null;
   order: number;
   draft: boolean;
   units: {

@@ -13,35 +13,33 @@ Next.js 16 (App Router) · TypeScript · Tailwind 4 + shadcn/ui, styled by [`doc
 
 ## Local setup
 
-Requirements: Node 22+, pnpm 10, Docker.
+Requirements: Node 22+, pnpm 10 (`corepack enable` gives you the right version), Docker Desktop running.
 
 ```bash
 pnpm install
-cp .env.example .env.local
-# set BETTER_AUTH_SECRET in .env.local:  openssl rand -base64 32
-# optionally add your own email to ADMIN_EMAILS
-pnpm db:up          # Postgres (+ bemacs_test DB) and Mailpit
-pnpm db:migrate
-pnpm db:seed        # syllabus from content/syllabus/*.yaml
+pnpm setup:local    # .env.local with a fresh secret, Postgres + Mailpit, migrations, syllabus
 pnpm dev            # http://localhost:3000
 ```
 
-Sign in with any `name@studbocconi.it` address. In development, no real email is sent: open Mailpit at http://localhost:8025 and click the link.
+Sign in with any `name@studbocconi.it` address. In development no real email is sent: open Mailpit at http://localhost:8025 and click the link. To sign in as an admin with another address, add it to `ADMIN_EMAILS` in `.env.local` and restart `pnpm dev`.
+
+`pnpm setup:local` is safe to re-run and never overwrites an existing `.env.local`. If port 5432 is taken by a local Postgres, stop it, or run with `POSTGRES_PORT=5433` and change the port in both database URLs in `.env.local`.
 
 ## Commands
 
-| Command           | What it does                                                              |
-| ----------------- | ------------------------------------------------------------------------- |
-| `pnpm lint`       | ESLint                                                                    |
-| `pnpm typecheck`  | Next route types + `tsc`                                                  |
-| `pnpm test`       | Vitest: unit + DB integration tests (uses `TEST_DATABASE_URL`)            |
-| `pnpm test:e2e`   | Playwright against a production build on :3100 and the test DB            |
-| `pnpm format`     | Prettier                                                                  |
-| `pnpm db:migrate` | Create/apply migrations in development                                    |
-| `pnpm db:seed`    | Upsert the syllabus. Never deletes; reports entries missing from the YAML |
-| `pnpm db:prune`   | List syllabus rows no longer in the YAML; `--yes` deletes them            |
-| `pnpm db:reset`   | Drop and recreate the dev database, then seed                             |
-| `pnpm db:studio`  | Prisma Studio                                                             |
+| Command            | What it does                                                              |
+| ------------------ | ------------------------------------------------------------------------- |
+| `pnpm lint`        | ESLint                                                                    |
+| `pnpm typecheck`   | Next route types + `tsc`                                                  |
+| `pnpm test`        | Vitest: unit + DB integration tests (uses `TEST_DATABASE_URL`)            |
+| `pnpm test:e2e`    | Playwright against a production build on :3100 and the test DB            |
+| `pnpm format`      | Prettier                                                                  |
+| `pnpm db:migrate`  | Create/apply migrations in development                                    |
+| `pnpm db:seed`     | Upsert the syllabus. Never deletes; reports entries missing from the YAML |
+| `pnpm setup:local` | One-time local setup (see above); safe to re-run                          |
+| `pnpm db:prune`    | List syllabus rows no longer in the YAML; `--yes` deletes them            |
+| `pnpm db:reset`    | Drop and recreate the dev database, then seed                             |
+| `pnpm db:studio`   | Prisma Studio                                                             |
 
 Done for a milestone means `pnpm lint && pnpm typecheck && pnpm test` and `pnpm test:e2e` are green.
 
@@ -64,6 +62,7 @@ lib/syllabus/      YAML schema, loader, seed
 lib/courses/       course queries
 prisma/            schema + migrations
 content/syllabus/  syllabus YAML (human-edited)
+content/materials/ lecture notes etc., local only (git-ignored, copyrighted)
 tests/             Vitest (unit, integration)
 e2e/               Playwright
 ```

@@ -90,3 +90,14 @@ The owner provided `bemacs-year1.yaml`, a summary of the Bocconi course guides. 
 1. **Statistics in phase 1?** The spec's phase 1 lists three courses (Micro, Math, CS). 30401 is part of the same "Mathematics and Statistics" course, but it's a 4th course in the app. Keep it, or remove `content/syllabus/stats.yaml` and run `pnpm db:prune --yes`.
 2. **Mathematics outline:** needs the unit/part breakdown from the lecture notes.
 3. **Source years:** Micro is from 2025-26, Math and Stats from 2024-25, CS from 2023-24. Re-check against the 2026/27 guides when they're published.
+
+## Semester priority, local setup, CI (2026-09-30)
+
+- **Semester 1 first** (owner's call). `Course.semester` was added (nullable column, migration `course_semester`) and is seeded from the YAML. `/courses` groups by semester: Micro, Math and CS under "Semester 1", Statistics under "Semester 2 · Later this year". Content and question work in M1–M3 focuses on semester 1.
+- **`pnpm setup:local`:** one command for local setup.
+  - Checks Node and that Docker is running.
+  - Creates `.env.local` with a fresh secret; never overwrites an existing one.
+  - Starts Postgres and Mailpit, applies migrations and seeds.
+  - Cross-platform.
+- **`content/materials/`:** for lecture notes (Mathematics notes are coming from the owner). Git-ignored, because the repository is public and course materials are copyrighted.
+- **CI:** it still doesn't start on GitHub. Runs end in about 3 seconds with no runner assigned and no logs. The workflow now uses only GitHub-owned actions (pnpm via corepack instead of `pnpm/action-setup`), in case the repo only allows those. If runs still don't start, the cause is on the account or repository settings side; the run page banner shows it.

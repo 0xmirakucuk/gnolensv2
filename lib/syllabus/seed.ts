@@ -43,6 +43,7 @@ export async function seedSyllabus(
           name: course.name,
           code: course.code,
           year: course.year,
+          semester: course.semester,
           order: course.order,
           draft: course.draft,
         };

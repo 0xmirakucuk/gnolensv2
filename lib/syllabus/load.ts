@@ -34,6 +34,7 @@ export function parseSyllabusFile(fileName: string, text: string): SyllabusCours
     name: course.name,
     code: course.code ?? null,
     year: course.year,
+    semester: course.semester ?? null,
     order: course.order,
     draft: course.draft,
     units: course.units.map((unit, u) => {

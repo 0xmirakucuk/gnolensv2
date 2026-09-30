@@ -3,6 +3,7 @@ import Link from "next/link";
 import { DraftBadge } from "@/components/draft-badge";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { requireOnboardedUser } from "@/lib/auth/session";
+import { groupBySemester } from "@/lib/courses/group";
 import { listCourses } from "@/lib/courses/queries";
 import { courseTint } from "@/lib/courses/tint";
 
@@ -34,36 +35,46 @@ export default async function CoursesPage() {
           </Link>
         </p>
       </div>
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {courses.map((course) => (
-          <li key={course.slug}>
-            <Link
-              href={`/courses/${course.slug}`}
-              className="focus-visible:ring-primary/40 block h-full rounded-lg outline-none focus-visible:ring-[3px]"
-            >
-              <Card
-                tint={courseTint(course.order)}
-                className="hover:shadow-card h-full p-8 transition-shadow duration-150"
-              >
-                <CardHeader className="gap-3">
-                  {course.code && (
-                    <span className="text-slate text-[11px] leading-[1.4] font-semibold tracking-[1px] uppercase">
-                      Course {course.code}
-                    </span>
-                  )}
-                  <CardTitle className="text-heading-4 text-ink">{course.name}</CardTitle>
-                  <CardDescription className="text-charcoal flex flex-wrap items-center gap-2">
-                    <span>
-                      {course.unitCount} units · {course.partCount} parts
-                    </span>
-                    {course.draft && <DraftBadge onTint />}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {groupBySemester(courses).map(({ semester, courses: group }) => (
+        <section key={semester ?? "other"} className="flex flex-col gap-4">
+          <div className="flex items-baseline gap-3">
+            <h2 className="text-heading-5">{semester ? `Semester ${semester}` : "Other"}</h2>
+            {semester !== null && semester > 1 && (
+              <span className="text-body-sm text-steel">Later this year</span>
+            )}
+          </div>
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {group.map((course) => (
+              <li key={course.slug}>
+                <Link
+                  href={`/courses/${course.slug}`}
+                  className="focus-visible:ring-primary/40 block h-full rounded-lg outline-none focus-visible:ring-[3px]"
+                >
+                  <Card
+                    tint={courseTint(course.order)}
+                    className="hover:shadow-card h-full p-8 transition-shadow duration-150"
+                  >
+                    <CardHeader className="gap-3">
+                      {course.code && (
+                        <span className="text-slate text-[11px] leading-[1.4] font-semibold tracking-[1px] uppercase">
+                          Course {course.code}
+                        </span>
+                      )}
+                      <CardTitle className="text-heading-4 text-ink">{course.name}</CardTitle>
+                      <CardDescription className="text-charcoal flex flex-wrap items-center gap-2">
+                        <span>
+                          {course.unitCount} units · {course.partCount} parts
+                        </span>
+                        {course.draft && <DraftBadge onTint />}
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
       {courses.length === 0 && (
         <p className="text-body-sm text-slate">No courses yet. Run `pnpm db:seed`.</p>
       )}

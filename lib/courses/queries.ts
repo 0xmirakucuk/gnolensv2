@@ -10,6 +10,7 @@ export async function listCourses(year: number) {
       slug: true,
       name: true,
       code: true,
+      semester: true,
       order: true,
       draft: true,
       units: { select: { _count: { select: { parts: true } } } },
