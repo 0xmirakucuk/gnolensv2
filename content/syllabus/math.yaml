@@ -1,0 +1,42 @@
+# 30400 Mathematics and Statistics - Module 1 (Mathematics), BEMACS year 1, semester 1.
+# Source: Bocconi course guide 2024-2025. The official page lists only 3 areas and a few
+# techniques, so this stays a DRAFT: the unit/part breakdown must come from the lecture notes.
+# Slugs are permanent IDs (questions will reference them). Edit titles freely; don't rename slugs
+# once questions exist. Order in this file = order in the app.
+slug: math
+name: Mathematics and Statistics - Module 1 (Mathematics)
+code: "30400"
+year: 1
+order: 2
+draft: true
+semester: 1
+credits: 8
+source_year: "2024-2025"
+instructor: Emanuele Borgonovo
+textbook: "Lecture notes and slides by the instructors (no textbook listed)"
+exams: "Assignments (12/30) + short exam (19/30), or general exam 100%. Open-ended questions."
+units:
+  - slug: calculus
+    title: Single-variable calculus
+    parts:
+      - slug: sequences
+        title: Sequences
+      - slug: derivatives
+        title: Derivatives
+  - slug: integration
+    title: Riemann integration
+    parts:
+      - slug: integrals
+        title: Integrals
+  - slug: discrete-math
+    title: Discrete mathematics
+    parts:
+      - slug: asymptotic-notation
+        title: Asymptotic notation
+      - slug: modular-arithmetic
+        title: Modular arithmetic
+  - slug: reasoning
+    title: Mathematical reasoning
+    parts:
+      - slug: proofs
+        title: Axioms, definitions, theorems and proofs

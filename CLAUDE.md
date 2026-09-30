@@ -27,3 +27,14 @@ Project: exam-prep web app for Bocconi BEMACS students. Full product spec: `docs
 - AI answers must cite the source chunk (document + page) they used. If retrieval finds nothing relevant, the AI says so instead of answering from general knowledge.
 - Do not scrape or ingest copyrighted material. Ingestion only reads files placed in `content/` by a human.
 - Keep UI text in English.
+
+## Design
+
+- `docs/DESIGN.md` is the only source of truth for UI. Follow it for every screen and component; don't use other styles or design systems.
+- Its tokens live in `app/globals.css` (`--color-*`, `--radius-*`, `--shadow-*`, `text-*` type scale). Use those tokens (`bg-primary`, `text-heading-3`, `rounded-lg`, `border-hairline`, ...), never raw hex values or Tailwind's default palette (`zinc-*`, `blue-500`, ...).
+- Component mapping: buttons → `components/ui/button.tsx` variants (`primary`, `dark`, `secondary`, `ghost`, `link`, ...), cards → `Card` with `tint`, chips → `Badge` variants. When DESIGN.md names a component we don't have yet, build it from its spec.
+- Where DESIGN.md is silent (its "Known Gaps", e.g. dark mode), choose the closest token-based option and note it in the milestone plan.
+
+## Framework docs
+
+@AGENTS.md

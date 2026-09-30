@@ -1,0 +1,53 @@
+# 30398 Fundamentals of Computer Science, BEMACS year 1, semester 1 (older guides say II).
+# Source: Bocconi course guide 2023-2024 (newest readable edition). Part titles are the official
+# topic names; units follow the course's theory / programming split.
+# Slugs are permanent IDs (questions will reference them). Edit titles freely; don't rename slugs
+# once questions exist. Order in this file = order in the app.
+slug: cs
+name: Fundamentals of Computer Science
+code: "30398"
+year: 1
+order: 3
+draft: false
+semester: 1
+credits: 8
+source_year: "2023-2024"
+instructor: Riccardo Zecchina
+textbook: "Cormen et al., Introduction to Algorithms (3rd ed.); Downey, Think Python (2nd ed.); Moore & Mertens, The Nature of Computation (optional)"
+exams: "Theory on paper 50% + programming on computer 50%. Both must be passed. Not open book."
+units:
+  - slug: theory
+    title: Theory
+    parts:
+      - slug: algorithms-turing-machines
+        title: "Notion of algorithm (Turing Machines, Church Thesis)"
+      - slug: growth-of-functions
+        title: Growth of functions and asymptotic notation
+      - slug: recurrences-divide-conquer
+        title: Recurrences and generating functions, divide and conquer
+      - slug: randomized-algorithms
+        title: Probabilistic analysis and randomized algorithms (Quicksort)
+      - slug: data-structures-matrices
+        title: Elementary data structures and matrix operations
+      - slug: graphs
+        title: "Graphs: minimum spanning trees, shortest paths, minimum cut"
+      - slug: np-completeness
+        title: Computational complexity and NP-completeness
+  - slug: programming-1
+    title: Programming part 1
+    parts:
+      - slug: python-basics
+        title: Python basics
+      - slug: data-structures-control-flow
+        title: Data structures and control flow
+      - slug: basic-algorithms
+        title: Basic algorithms and techniques
+  - slug: programming-2
+    title: Programming part 2
+    parts:
+      - slug: advanced-data-structures
+        title: Advanced data structures
+      - slug: oop
+        title: Object-oriented programming (classes, methods)
+      - slug: prng
+        title: Pseudo-random number generation

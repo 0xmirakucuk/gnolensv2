@@ -1,0 +1,83 @@
+name: CI
+
+# Every push (any branch) gets checked; PRs from branches in this repo show those results.
+on:
+  push:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: bemacs
+          POSTGRES_PASSWORD: bemacs
+          POSTGRES_DB: bemacs
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U bemacs -d bemacs"
+          --health-interval 2s --health-timeout 3s --health-retries 30
+      mailpit:
+        image: axllent/mailpit:latest
+        ports: ["1025:1025", "8025:8025"]
+
+    env:
+      # CI-only values; nothing here is a real secret.
+      DATABASE_URL: postgresql://bemacs:bemacs@localhost:5432/bemacs
+      TEST_DATABASE_URL: postgresql://bemacs:bemacs@localhost:5432/bemacs_test
+      BETTER_AUTH_SECRET: ci-only-secret-not-used-anywhere-else-0123456789
+      BETTER_AUTH_URL: http://localhost:3000
+      EMAIL_FROM: "BEMACS Exam Prep <no-reply@localhost>"
+      SMTP_HOST: localhost
+      SMTP_PORT: "1025"
+      MAILPIT_URL: http://localhost:8025
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Only GitHub-owned actions: works even when the repo allows no third-party actions.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # pnpm version comes from "packageManager" in package.json.
+      - run: corepack enable
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/pnpm/store
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Create test database
+        run: psql "$DATABASE_URL" -c "CREATE DATABASE bemacs_test"
+
+      - run: pnpm lint
+      - run: pnpm format:check
+      - run: pnpm typecheck
+      - run: pnpm test
+
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+
+      - run: pnpm test:e2e
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
