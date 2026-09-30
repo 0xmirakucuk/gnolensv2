@@ -26,6 +26,17 @@ export const courseFileSchema = z
     order: z.number().int().min(1),
     // true while the outline has not been checked against the official course syllabus.
     draft: z.boolean().default(false),
+    // Course-guide facts kept with the syllabus. Not stored in the DB yet; M2's exam simulation
+    // (length, weights) is the first planned consumer.
+    semester: z.union([z.literal(1), z.literal(2)]).optional(),
+    credits: z.number().int().positive().optional(),
+    source_year: z
+      .string()
+      .regex(/^\d{4}-\d{4}$/, "must look like 2025-2026")
+      .optional(),
+    instructor: z.string().trim().min(1).optional(),
+    textbook: z.string().trim().min(1).optional(),
+    exams: z.string().trim().min(1).optional(),
     units: z.array(unitSchema).min(1, "a course needs at least one unit"),
   })
   .superRefine((course, ctx) => {

@@ -39,6 +39,7 @@ Sign in with any `name@studbocconi.it` address. In development, no real email is
 | `pnpm format`     | Prettier                                                                  |
 | `pnpm db:migrate` | Create/apply migrations in development                                    |
 | `pnpm db:seed`    | Upsert the syllabus. Never deletes; reports entries missing from the YAML |
+| `pnpm db:prune`   | List syllabus rows no longer in the YAML; `--yes` deletes them            |
 | `pnpm db:reset`   | Drop and recreate the dev database, then seed                             |
 | `pnpm db:studio`  | Prisma Studio                                                             |
 
@@ -48,7 +49,9 @@ First Playwright run: `pnpm exec playwright install chromium`.
 
 ## Editing the syllabus
 
-One file per course in `content/syllabus/<course-slug>.yaml`. Order in the file is order in the app. Slugs (`micro`, `u1`, `p1`) are permanent IDs: questions will reference them, so change titles freely but don't rename slugs once questions exist. Run `pnpm db:seed` after editing.
+One file per course in `content/syllabus/<course-slug>.yaml`. Order in the file is order in the app. Slugs (`micro`, `u1`, `p1`) are permanent IDs: questions will reference them, so change titles freely but don't rename slugs once questions exist. Run `pnpm db:seed` after editing. If you removed or renamed units/parts, run `pnpm db:prune` to see the leftovers and `pnpm db:prune --yes` to delete them (refused once questions reference them).
+
+Optional course-guide fields (`semester`, `credits`, `source_year`, `instructor`, `textbook`, `exams`) are validated but not stored in the database yet.
 
 ## Layout
 

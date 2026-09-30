@@ -13,6 +13,11 @@ async function main() {
     db.verification.deleteMany(),
     db.rateLimit.deleteMany(),
     db.user.deleteMany(),
+    // Syllabus too, so the seed below recreates it exactly from content/ (no orphans from
+    // earlier YAML versions). Safe while nothing references Part; revisit in M1.
+    db.part.deleteMany(),
+    db.unit.deleteMany(),
+    db.course.deleteMany(),
   ]);
   await db.$disconnect();
 }

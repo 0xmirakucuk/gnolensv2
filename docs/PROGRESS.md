@@ -71,3 +71,22 @@ The owner provided `docs/DESIGN.md`, which is now the only UI source of truth (r
   - **Dark mode:** DESIGN.md defines no dark-mode tokens, so the app is light-only for now; the old OS dark mode was removed.
   - **tailwind-merge** was taught the custom `text-*` sizes so they aren't dropped when merged with text colors.
 - All tests pass: lint, typecheck, 50 Vitest tests, 9 Playwright tests.
+
+## Syllabus: official course topics (2026-09-30)
+
+The owner provided `bemacs-year1.yaml`, a summary of the Bocconi course guides. `content/syllabus/` now follows it.
+
+- **Microeconomics (30403):** 7 units, 23 parts from the official topics (2025-26 guide). No longer a draft.
+- **Fundamentals of CS (30398):** Theory, Programming 1 and Programming 2, 13 parts (2023-24 guide, the newest readable one). No longer a draft.
+- **Mathematics – Module 1 (30400):** the official page lists only 3 areas and a few techniques, so it has 4 units and 6 parts and **stays a draft**. The real breakdown must come from the lecture notes.
+- **New course, Statistics – Module 2 (30401):** 9 units, 38 parts, semester 2, from the 2024-25 guide.
+- **Slugs:** units and parts now have descriptive slugs (e.g. `micro.consumer-theory.elasticities`) instead of `u1`/`p1`, so reordering never makes an ID misleading. Safe to change now because nothing references them yet.
+- **Course-guide facts:** semester, credits, source year, instructor, textbook and exam format are kept in the YAML and validated, but not stored in the DB (no schema change). M2's exam simulation is the first planned use.
+- **`pnpm db:prune`:** lists syllabus rows that are no longer in the YAML, and `--yes` deletes them in one transaction. The FK `Restrict` makes it fail safely once questions exist. E2E setup now rebuilds the syllabus in the test DB from scratch.
+- All tests pass: 54 Vitest, 9 Playwright.
+
+### Needs a human decision
+
+1. **Statistics in phase 1?** The spec's phase 1 lists three courses (Micro, Math, CS). 30401 is part of the same "Mathematics and Statistics" course, but it's a 4th course in the app. Keep it, or remove `content/syllabus/stats.yaml` and run `pnpm db:prune --yes`.
+2. **Mathematics outline:** needs the unit/part breakdown from the lecture notes.
+3. **Source years:** Micro is from 2025-26, Math and Stats from 2024-25, CS from 2023-24. Re-check against the 2026/27 guides when they're published.

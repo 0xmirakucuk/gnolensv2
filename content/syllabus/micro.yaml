@@ -1,5 +1,6 @@
-# 30403 Microeconomics, BEMACS year 1, a.y. 2026/2027 (class 25).
-# DRAFT outline: replace units/parts with the official course syllabus, then set draft: false.
+# 30403 Microeconomics, BEMACS year 1, semester 1.
+# Source: Bocconi course guide 2025-2026 (2026/27 page not yet published). Part titles are the
+# official topic names; units are our own grouping of them.
 # Slugs are permanent IDs (questions will reference them). Edit titles freely; don't rename slugs
 # once questions exist. Order in this file = order in the app.
 slug: micro
@@ -7,52 +8,78 @@ name: Microeconomics
 code: "30403"
 year: 1
 order: 1
-draft: true
+draft: false
+semester: 1
+credits: 8
+source_year: "2025-2026"
+instructor: Maristella Botticini
+textbook: "Varian & Melitz, Intermediate Microeconomics with Calculus: A Modern Approach, 2nd Int. Student Ed., Norton 2024 (ISBN 9781324034438)"
+exams: "Midterm 35% + second partial 35% (January), or general exam 70%. Plus homeworks 10% (SmartWork), group presentations 10%, final essay 10%, LaTeX problem set pass/fail."
 units:
-  - slug: u1
-    title: Preferences and utility
+  - slug: foundations
+    title: Foundations
     parts:
-      - slug: p1
-        title: Preference relations and their properties
-      - slug: p2
-        title: Utility functions
-      - slug: p3
-        title: Indifference curves and the marginal rate of substitution
-  - slug: u2
-    title: Consumer choice and demand
+      - slug: thinking-like-an-economist
+        title: "The beauty of microeconomics. How to think like an economist. Models and data"
+      - slug: rational-choice
+        title: Rational choice theory
+  - slug: consumer-theory
+    title: Consumer theory
     parts:
-      - slug: p1
-        title: Budget constraint
-      - slug: p2
-        title: Utility maximization
-      - slug: p3
-        title: Demand functions and elasticities
-      - slug: p4
-        title: Income and substitution effects
-  - slug: u3
-    title: Production and costs
+      - slug: budget-constraints
+        title: Budget and time constraints
+      - slug: preferences-utility
+        title: Preferences, indifference curves and utility functions
+      - slug: optimal-choice
+        title: Constrained optimal consumer choice
+      - slug: uncompensated-demand
+        title: Uncompensated demand functions
+      - slug: elasticities
+        title: Elasticities (price, income, cross-price)
+      - slug: compensated-demand
+        title: Expenditure function and compensated demand
+      - slug: substitution-income-effects
+        title: Substitution and income effects
+  - slug: consumer-applications
+    title: Applications of consumer choice
     parts:
-      - slug: p1
-        title: Production functions and returns to scale
-      - slug: p2
-        title: Cost minimization
-      - slug: p3
-        title: Short-run and long-run cost curves
-  - slug: u4
-    title: Perfect competition
+      - slug: labor-supply
+        title: Labor supply
+      - slug: intertemporal-choice
+        title: Intertemporal choice, saving and borrowing
+      - slug: uncertainty
+        title: "Choice under uncertainty; lotteries, expected utility, risk attitudes; insurance"
+  - slug: game-theory
+    title: Game theory
     parts:
-      - slug: p1
-        title: Profit maximization and firm supply
-      - slug: p2
-        title: Market equilibrium
-      - slug: p3
-        title: Consumer and producer surplus
-  - slug: u5
-    title: Market power
+      - slug: equilibrium-concepts
+        title: "Game theory and its applications (Nash equilibrium; subgame perfect equilibrium)"
+  - slug: producer-theory
+    title: Producer theory
     parts:
-      - slug: p1
-        title: Monopoly
-      - slug: p2
-        title: Price discrimination
-      - slug: p3
-        title: Oligopoly and basic game theory
+      - slug: production-costs
+        title: Production and costs
+      - slug: cost-min-profit-max
+        title: Cost minimization and profit maximization
+  - slug: markets
+    title: Markets
+    parts:
+      - slug: perfect-competition
+        title: Equilibrium in perfectly competitive markets
+      - slug: interventions-welfare
+        title: Interventions in competitive markets and welfare analysis
+      - slug: monopoly
+        title: "Monopoly. Price discrimination. Natural monopoly"
+      - slug: monopolistic-competition
+        title: Monopolistic competition
+      - slug: oligopoly
+        title: "Oligopoly (Cournot, Bertrand, collusion)"
+  - slug: general-equilibrium
+    title: General equilibrium and welfare
+    parts:
+      - slug: pareto-welfare-theorems
+        title: "General equilibrium analysis. Pareto efficiency. Welfare theorems"
+      - slug: externalities-public-goods
+        title: "Externalities and public goods. Free riding problem"
+      - slug: synthesis
+        title: Synthesis and takeaways

@@ -1,0 +1,83 @@
+# 30401 Mathematics and Statistics - Module 2 (Statistics), BEMACS year 1, semester 2.
+# Source: Bocconi course guide 2024-2025. Unit names are the official lecture blocks; parts are
+# the topics listed under each.
+# Slugs are permanent IDs (questions will reference them). Edit titles freely; don't rename slugs
+# once questions exist. Order in this file = order in the app.
+slug: stats
+name: Mathematics and Statistics - Module 2 (Statistics)
+code: "30401"
+year: 1
+order: 4
+draft: false
+semester: 2
+credits: 8
+source_year: "2024-2025"
+instructor: Omiros Papaspiliopoulos
+textbook: "Spiegelhalter, The Art of Statistics (2019); Grimmett & Stirzaker, Probability and Random Processes (4th ed., 2020); Bishop, Pattern Recognition and Machine Learning (2006)"
+exams: "Two partials 50/50 or general exam 100%, max 31. Exercises incl. R. Optional group project up to +1.5."
+units:
+  - slug: data-visualization
+    title: Data visualization and summarization
+    parts:
+      - { slug: barplots-boxplots, title: Barplots and box plots }
+      - { slug: means-medians, title: Means and medians }
+      - { slug: log-scales, title: Log scales }
+      - { slug: correlation, title: Correlation and distance correlation }
+  - slug: randomization
+    title: From randomization to randomness
+    parts:
+      - { slug: experimental-observational, title: Experimental vs observational data }
+      - { slug: randomized-controlled-trials, title: Randomized controlled trials }
+      - { slug: confounders, title: Confounders }
+      - { slug: simpsons-paradox, title: "Simpson's paradox" }
+  - slug: probability-intro
+    title: What is probability and what is it useful for
+    parts:
+      - { slug: bernoulli, title: Bernoulli distribution }
+      - { slug: poisson, title: Poisson distribution }
+      - { slug: probability-densities, title: Probability densities }
+      - { slug: learning-models, title: Learning models from data }
+  - slug: probability-calculus
+    title: The calculus of probability
+    parts:
+      - { slug: events, title: Events }
+      - { slug: set-theory, title: Set theory }
+      - { slug: probability-axioms, title: Probability axioms }
+  - slug: more-models
+    title: More models for more data
+    parts:
+      - { slug: density-functions, title: Density functions }
+      - { slug: gaussian, title: Gaussian distribution }
+      - { slug: survival-censoring, title: Survival analysis and censoring }
+      - { slug: exponential-gamma, title: Exponential and gamma }
+      - { slug: uniform, title: Uniform distribution }
+      - { slug: transformation-of-variables, title: Transformation of variables }
+  - slug: joint-distributions
+    title: Joint distributions, independence and combinatorics
+    parts:
+      - { slug: joint-marginal, title: Joint and marginal distributions }
+      - { slug: independence, title: Independence }
+      - { slug: binomial, title: Binomial distribution }
+  - slug: expectation
+    title: Expectation
+    parts:
+      - { slug: expected-value, title: Expected value }
+      - { slug: variance, title: Variance and standard deviation }
+      - { slug: skewness, title: Skewness }
+      - { slug: sample-population-moments, title: Sample vs population moments }
+  - slug: limit-theorems
+    title: Concentration, inequalities and limit theorems
+    parts:
+      - { slug: markov-inequality, title: Markov inequality }
+      - { slug: chebyshev-inequality, title: Chebyshev inequality }
+      - { slug: weak-law, title: Weak law of large numbers }
+      - { slug: central-limit-theorem, title: Central limit theorem }
+  - slug: statistical-learning
+    title: Statistical learning
+    parts:
+      - { slug: hypothesis-testing, title: Hypothesis testing and p-values }
+      - { slug: fisher-exact-test, title: Fisher exact test }
+      - { slug: multiple-testing, title: Multiple testing }
+      - { slug: confidence-intervals, title: Confidence intervals }
+      - { slug: bootstrap, title: Bootstrap }
+      - { slug: funnel-plots, title: Funnel plots }

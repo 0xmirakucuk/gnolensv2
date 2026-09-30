@@ -70,6 +70,19 @@ describe("parseSyllabusFile", () => {
     expect(() => parseSyllabusFile("micro.yaml", text)).toThrow(SyllabusError);
   });
 
+  it("accepts optional course-guide facts", () => {
+    const text = valid.replace(
+      "order: 1\n",
+      'order: 1\nsemester: 1\ncredits: 8\nsource_year: "2025-2026"\ninstructor: X\ntextbook: Y\nexams: Z\n',
+    );
+    expect(parseSyllabusFile("micro.yaml", text).slug).toBe("micro");
+  });
+
+  it("rejects a malformed source_year", () => {
+    const text = valid.replace("order: 1\n", 'order: 1\nsource_year: "2025"\n');
+    expect(() => parseSyllabusFile("micro.yaml", text)).toThrow(/source_year/);
+  });
+
   it("rejects unknown keys (catches typos like 'part:')", () => {
     const text = valid.replace("order: 1\n", "order: 1\nteacher: someone\n");
     expect(() => parseSyllabusFile("micro.yaml", text)).toThrow(/teacher/);
@@ -104,7 +117,9 @@ describe("assertUniqueCourses", () => {
 describe("content/syllabus", () => {
   it("the committed syllabus files are valid", async () => {
     const courses = await loadSyllabusDir(path.join(process.cwd(), "content/syllabus"));
-    expect(courses.map((c) => c.slug)).toEqual(["micro", "math", "cs"]);
-    expect(courses.map((c) => c.code)).toEqual(["30403", "30400", "30398"]);
+    expect(courses.map((c) => c.slug)).toEqual(["micro", "math", "cs", "stats"]);
+    expect(courses.map((c) => c.code)).toEqual(["30403", "30400", "30398", "30401"]);
+    // Only Mathematics is still a draft (the official page lists just three areas).
+    expect(courses.filter((c) => c.draft).map((c) => c.slug)).toEqual(["math"]);
   });
 });

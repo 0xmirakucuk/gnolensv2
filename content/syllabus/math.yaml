@@ -1,5 +1,6 @@
-# 30400 Mathematics and Statistics - Module 1 (Mathematics), BEMACS year 1, a.y. 2026/2027 (class 25).
-# DRAFT outline: replace units/parts with the official course syllabus, then set draft: false.
+# 30400 Mathematics and Statistics - Module 1 (Mathematics), BEMACS year 1, semester 1.
+# Source: Bocconi course guide 2024-2025. The official page lists only 3 areas and a few
+# techniques, so this stays a DRAFT: the unit/part breakdown must come from the lecture notes.
 # Slugs are permanent IDs (questions will reference them). Edit titles freely; don't rename slugs
 # once questions exist. Order in this file = order in the app.
 slug: math
@@ -8,47 +9,34 @@ code: "30400"
 year: 1
 order: 2
 draft: true
+semester: 1
+credits: 8
+source_year: "2024-2025"
+instructor: Emanuele Borgonovo
+textbook: "Lecture notes and slides by the instructors (no textbook listed)"
+exams: "Assignments (12/30) + short exam (19/30), or general exam 100%. Open-ended questions."
 units:
-  - slug: u1
-    title: Foundations
+  - slug: calculus
+    title: Single-variable calculus
     parts:
-      - slug: p1
-        title: Logic and sets
-      - slug: p2
-        title: Real numbers and inequalities
-  - slug: u2
-    title: Functions of one variable
+      - slug: sequences
+        title: Sequences
+      - slug: derivatives
+        title: Derivatives
+  - slug: integration
+    title: Riemann integration
     parts:
-      - slug: p1
-        title: Elementary functions
-      - slug: p2
-        title: Composition and inverse functions
-  - slug: u3
-    title: Sequences, limits and continuity
+      - slug: integrals
+        title: Integrals
+  - slug: discrete-math
+    title: Discrete mathematics
     parts:
-      - slug: p1
-        title: Sequences and their limits
-      - slug: p2
-        title: Limits of functions
-      - slug: p3
-        title: Continuity
-  - slug: u4
-    title: Differential calculus
+      - slug: asymptotic-notation
+        title: Asymptotic notation
+      - slug: modular-arithmetic
+        title: Modular arithmetic
+  - slug: reasoning
+    title: Mathematical reasoning
     parts:
-      - slug: p1
-        title: Derivatives and differentiation rules
-      - slug: p2
-        title: Mean value theorems
-      - slug: p3
-        title: Taylor expansion
-      - slug: p4
-        title: Study of a function
-  - slug: u5
-    title: Integral calculus
-    parts:
-      - slug: p1
-        title: Indefinite integrals
-      - slug: p2
-        title: Definite integrals
-      - slug: p3
-        title: Improper integrals
+      - slug: proofs
+        title: Axioms, definitions, theorems and proofs
