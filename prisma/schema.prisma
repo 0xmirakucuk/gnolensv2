@@ -1,0 +1,134 @@
+// Prisma schema. Docs: https://pris.ly/d/prisma-schema
+// Connection URL lives in prisma.config.ts (Prisma 7).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------------------------------------------------------------------
+// Auth (field names must match Better Auth's core schema)
+// ---------------------------------------------------------------------------
+
+enum Tier {
+  FREE
+  PRO
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String    @unique // always stored lowercased
+  emailVerified Boolean   @default(false)
+  image         String?
+  // BEMACS year (1-3). Null until the user completes onboarding.
+  year          Int?
+  tier          Tier      @default(FREE)
+  role          Role      @default(STUDENT)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+// ---------------------------------------------------------------------------
+// Syllabus taxonomy: Course > Unit > Part, seeded from content/syllabus/*.yaml.
+// Slugs are the stable identity ("micro", "micro.u1", "micro.u1.p1"); ids are internal.
+// Deletes are restricted because questions/mastery/chunks will reference Part.
+// ---------------------------------------------------------------------------
+
+model Course {
+  id    String  @id @default(cuid())
+  slug  String  @unique
+  name  String
+  code  String? // Bocconi course code, e.g. "30403"
+  year  Int
+  order Int
+  draft Boolean @default(false) // true while the outline is not yet checked against the official syllabus
+  units Unit[]
+
+  @@map("course")
+}
+
+model Unit {
+  id       String @id @default(cuid())
+  slug     String @unique
+  title    String
+  order    Int
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Restrict)
+  parts    Part[]
+
+  @@unique([courseId, order])
+  @@map("unit")
+}
+
+model Part {
+  id     String @id @default(cuid())
+  slug   String @unique
+  title  String
+  order  Int
+  unitId String
+  unit   Unit   @relation(fields: [unitId], references: [id], onDelete: Restrict)
+
+  @@unique([unitId, order])
+  @@map("part")
+}
